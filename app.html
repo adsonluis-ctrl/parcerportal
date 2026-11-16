@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parcer · Painel do Corretor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/parcer.css">
+<style>
+/* ================= APP SHELL ================= */
+body.app{background:var(--soft)}
+.view{display:none}
+.view.on{display:block}
+
+/* login */
+.login{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr}
+.login .side{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:48px;display:flex;flex-direction:column}
+.login .side .bars{width:44%}
+.login .side > *:not(.bars){position:relative;z-index:2}
+.login .side img{height:20px;width:auto;align-self:flex-start}
+.login .side h1{margin-top:auto;font-size:clamp(30px,3.6vw,46px);font-weight:300;letter-spacing:-.02em;line-height:1.1;max-width:460px}
+.login .side h1 b{font-weight:700;color:var(--sky)}
+.login .side p{margin-top:16px;color:rgba(255,255,255,.72);max-width:420px}
+.login .side ul{list-style:none;margin-top:28px;display:flex;flex-direction:column;gap:12px}
+.login .side li{display:flex;gap:12px;align-items:center;font-size:14.5px}
+.login .side li span{width:24px;height:24px;border-radius:50%;background:var(--royal);display:grid;place-items:center;flex:none}
+.login .side li svg{width:13px;height:13px}
+.login .box{display:grid;place-items:center;padding:40px 24px}
+.login form{width:min(380px,100%)}
+.login h2{font-size:28px;font-weight:300;letter-spacing:-.02em;margin-bottom:6px}
+.login h2 b{font-weight:700;color:var(--royal)}
+.login .hint{color:var(--muted);font-size:14px;margin-bottom:26px}
+.login .f{margin-bottom:16px}
+.login .btn{width:100%;justify-content:center;padding:14px;font-size:15px;margin-top:6px}
+.login .links{display:flex;justify-content:space-between;font-size:13px;margin-top:16px;color:var(--muted)}
+.login .links a{color:var(--royal);font-weight:600}
+.demo-note{margin-top:26px;font-size:12.5px;color:var(--muted);background:var(--ice);border-radius:12px;padding:12px 14px}
+
+/* shell */
+.shell{display:grid;grid-template-columns:256px 1fr;min-height:100vh}
+.sb{background:var(--navy);color:#fff;padding:26px 18px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh}
+.sb > img{height:16px;width:auto;align-self:flex-start;margin:4px 10px}
+.me{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px}
+.me .lg{width:40px;height:40px;border-radius:12px;background:#fff;display:grid;place-items:center;overflow:hidden;flex:none;font-weight:700;font-size:14px}
+.me .lg img{max-width:86%;max-height:86%}
+.me b{font-size:13.5px;font-weight:600;display:block;line-height:1.25}
+.me small{font-size:11.5px;color:rgba(255,255,255,.6)}
+.sb nav{display:flex;flex-direction:column;gap:4px}
+.sb nav a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.72);transition:all .2s}
+.sb nav a svg{width:18px;height:18px}
+.sb nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.sb nav a.on{background:var(--royal);color:#fff}
+.sb nav a .ct{margin-left:auto;background:var(--sky);color:var(--navy);font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px}
+.sb .out{margin-top:auto;font-size:13px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:10px;padding:10px 12px}
+.sb .out:hover{color:#fff}
+.sb .out svg{width:16px;height:16px}
+.main{padding:34px 40px 60px;min-width:0}
+.ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.ph .ey{font-size:11.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--royal)}
+.ph h1{font-size:clamp(26px,3vw,34px);font-weight:300;letter-spacing:-.02em;line-height:1.15;margin-top:6px}
+.ph h1 b{font-weight:700;color:var(--royal)}
+.ph p{color:var(--muted);font-size:14.5px;margin-top:6px}
+
+.pane{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:24px}
+.pane h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.pane .sub{font-size:13.5px;color:var(--muted);margin-bottom:18px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.stat{display:flex;flex-direction:column;gap:6px}
+.stat .n{font-size:40px;font-weight:300;letter-spacing:-.03em;line-height:1}
+.stat .n b{font-weight:600;color:var(--royal)}
+.stat small{font-size:13px;color:var(--muted)}
+.linkbox{display:flex;gap:10px;align-items:center;background:var(--soft);border-radius:14px;padding:10px 10px 10px 16px;margin-top:6px}
+.linkbox code{flex:1;font-family:inherit;font-size:14px;font-weight:500;color:var(--royal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.check{list-style:none;display:flex;flex-direction:column;gap:4px}
+.check li{display:flex;gap:12px;align-items:center;padding:10px 4px;border-top:1px solid var(--line);font-size:14px}
+.check li:first-child{border-top:0}
+.check li .c{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;color:#fff}
+.check li .c svg{width:13px;height:13px}
+.check li.ok .c{background:var(--royal);border-color:var(--royal)}
+.check li.ok span.t{color:var(--muted);text-decoration:line-through}
+.check li a{margin-left:auto;font-size:13px;font-weight:600;color:var(--royal)}
+
+/* editor + preview */
+.editor{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+.preview-wrap{position:sticky;top:24px}
+.preview-wrap .lb{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;justify-content:space-between}
+.phone{background:#0b1430;border-radius:38px;padding:10px;box-shadow:0 30px 60px rgba(4,22,63,.25)}
+.phone .scr{border-radius:30px;overflow:hidden;height:640px;overflow-y:auto;background:#fff;scrollbar-width:none}
+.phone .scr::-webkit-scrollbar{display:none}
+.upl{display:flex;gap:16px;align-items:center}
+.upl .lgbig{width:96px;height:96px;border-radius:20px;border:1.5px dashed var(--chip);background:var(--soft);display:grid;place-items:center;overflow:hidden;flex:none;color:var(--muted);font-size:12px;text-align:center}
+.upl .lgbig img{max-width:84%;max-height:84%}
+.upl .btns{flex-direction:column;align-items:flex-start}
+.upl small{font-size:12px;color:var(--muted)}
+.sw{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sw button{width:38px;height:38px;border-radius:12px;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);transition:transform .15s}
+.sw button:hover{transform:scale(1.08)}
+.sw button.on{box-shadow:0 0 0 2px var(--royal)}
+.sw label.custom{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--royal);background:var(--ice);border-radius:999px;padding:8px 14px;cursor:pointer}
+.sw input[type=color]{width:22px;height:22px;border:0;padding:0;background:none;cursor:pointer}
+.cnote{font-size:12.5px;color:var(--muted);margin-top:10px;display:flex;gap:8px;align-items:flex-start}
+.cnote svg{width:14px;height:14px;color:var(--royal);flex:none;margin-top:2px}
+.sec-t{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--royal);margin:6px 0 14px}
+.pane + .pane{margin-top:18px}
+.prodpick{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.prodpick label{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:all .2s;font-size:14px;font-weight:500}
+.prodpick label .ico{width:34px;height:34px;border-radius:10px}
+.prodpick label .ico svg{width:17px;height:17px}
+.prodpick input{position:absolute;opacity:0}
+.prodpick label:has(input:checked){border-color:var(--royal);background:var(--ice)}
+.prodpick label .tick{margin-left:auto;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff}
+.prodpick label .tick svg{width:12px;height:12px}
+.prodpick label:has(input:checked) .tick{background:var(--royal);border-color:var(--royal)}
+.heads{display:flex;flex-direction:column;gap:8px}
+.heads label{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:14px}
+.heads label:has(input:checked){border-color:var(--royal);background:var(--ice)}
+.heads input{accent-color:var(--royal)}
+.savebar{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+
+/* forms list */
+.flist .row{cursor:default}
+.flist .row .acts{display:flex;gap:8px}
+.flist .row .btn{padding:8px 13px;font-size:12.5px}
+.flist .row.off .ico,.flist .row.off .lbl{opacity:.5}
+
+/* leads */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--muted)}
+.filters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.lead{display:grid;grid-template-columns:44px 1.3fr 1fr 1fr auto;gap:16px;align-items:center;padding:16px 22px;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
+.lead:first-child{border-top:0}
+.lead:hover{background:#FAFBFE}
+.lead .av{width:40px;height:40px;border-radius:12px;background:var(--ice);color:var(--royal);display:grid;place-items:center;font-weight:700;font-size:13px}
+.lead b{font-size:14.5px;font-weight:600;display:block}
+.lead small{font-size:12.5px;color:var(--muted)}
+.st{font-size:11.5px;font-weight:600;border-radius:999px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px;justify-self:start}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st.novo{background:var(--chip);color:var(--royal)}
+.st.contato{background:#FFF3D6;color:#8A5A00}
+.st.fechado{background:var(--navy);color:#fff}
+.lead-d{grid-column:1/-1;display:none;background:var(--soft);border-radius:14px;padding:16px 18px;margin-top:4px;cursor:default}
+.lead.open .lead-d{display:block}
+.lead-d dl{display:grid;grid-template-columns:180px 1fr;gap:6px 14px;font-size:13.5px}
+.lead-d dt{color:var(--muted)}
+.lead-d .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.lead-d select{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:#fff}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+
+/* ================= SITE (página de captura do corretor) ================= */
+.site{--b:#0F766E;--bd:#0A4F49;--bt:#fff;--bl:#E6F2F1;container-type:inline-size;font-family:'Inter',sans-serif;color:#0A1B4A;background:#fff}
+.site *{box-sizing:border-box}
+.s-top{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #EEF1F6;background:#fff;position:sticky;top:0;z-index:5}
+.s-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;min-height:36px}
+.s-logo img{max-height:38px;max-width:150px;display:block}
+.s-logo .mono{width:36px;height:36px;border-radius:10px;background:var(--b);color:var(--bt);display:grid;place-items:center;font-size:13px}
+.s-btn{display:inline-flex;align-items:center;gap:8px;background:var(--b);color:var(--bt);font-weight:600;font-size:14px;border-radius:999px;padding:12px 20px;border:0;cursor:pointer;transition:filter .2s,transform .2s;text-decoration:none}
+.s-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.s-btn svg{width:16px;height:16px}
+.s-btn.wa{background:#25D366;color:#04163F}
+.s-btn.sm{padding:9px 14px;font-size:13px}
+.s-hero{background:var(--bd);color:#fff;padding:40px 22px 46px;position:relative;overflow:hidden}
+.s-hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:0 0 0 220px;background:var(--b);opacity:.55}
+.s-hero > *{position:relative;z-index:1}
+.s-hero .ey{font-size:10.5px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;opacity:.75}
+.s-hero h1{font-size:30px;font-weight:300;letter-spacing:-.02em;line-height:1.12;margin-top:12px}
+.s-hero h1 b{font-weight:700}
+.s-hero p{margin-top:12px;font-size:15px;opacity:.82;line-height:1.5}
+.s-hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.s-hero .s-btn{background:#fff;color:var(--bd)}
+.s-hero .s-btn.wa{background:#25D366;color:#04163F}
+.s-trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;font-size:12.5px;opacity:.8}
+.s-trust span{display:flex;gap:6px;align-items:center}
+.s-trust svg{width:14px;height:14px}
+.s-sec{padding:36px 22px}
+.s-sec h2{font-size:24px;font-weight:300;letter-spacing:-.02em;line-height:1.15}
+.s-sec h2 b{font-weight:700;color:var(--b)}
+.s-sec .lead-t{font-size:14.5px;color:#5B6785;margin-top:8px}
+.s-ey{font-size:10.5px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--b);margin-bottom:8px}
+.s-prods{display:grid;grid-template-columns:1fr;gap:10px;margin-top:20px}
+.s-prod{display:flex;gap:14px;align-items:center;border:1px solid #E3E8F2;border-radius:16px;padding:14px 16px;background:#fff;text-decoration:none;color:inherit;transition:border .2s,transform .2s;cursor:pointer;text-align:left;font:inherit;width:100%}
+.s-prod:hover{border-color:var(--b);transform:translateY(-1px)}
+.s-prod .i{width:42px;height:42px;border-radius:12px;background:var(--bl);color:var(--b);display:grid;place-items:center;flex:none}
+.s-prod .i svg{width:20px;height:20px}
+.s-prod b{font-size:15px;font-weight:600;display:block}
+.s-prod small{font-size:13px;color:#5B6785}
+.s-prod .ar{margin-left:auto;color:var(--b);width:18px;height:18px;flex:none}
+.s-form{background:#F3F5FA}
+.s-card{background:#fff;border-radius:20px;padding:22px;margin-top:18px;box-shadow:0 8px 24px rgba(4,22,63,.06)}
+.s-f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.s-f label{font-size:13px;font-weight:600}
+.s-f input,.s-f select{font:inherit;font-size:15px;background:#F3F5FA;border:1.5px solid transparent;border-radius:12px;padding:12px 14px;outline:none;color:inherit;width:100%}
+.s-f input:focus,.s-f select:focus{border-color:var(--b);background:#fff}
+.s-f.err input,.s-f.err select{border-color:#D93B3B}
+.s-cons{display:flex;gap:10px;font-size:12.5px;color:#5B6785;margin:4px 0 16px;align-items:flex-start}
+.s-cons input{accent-color:var(--b);margin-top:2px}
+.s-ok{text-align:center;padding:12px 0}
+.s-ok .c{width:54px;height:54px;border-radius:50%;background:var(--b);color:var(--bt);display:grid;place-items:center;margin:0 auto 12px}
+.s-ok .c svg{width:26px;height:26px}
+.s-about{display:flex;flex-direction:column;gap:12px}
+.s-about .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.s-about .chips span{font-size:12.5px;font-weight:600;background:var(--bl);color:var(--b);border-radius:999px;padding:6px 12px;display:inline-flex;gap:6px;align-items:center}
+.s-about .chips svg{width:13px;height:13px}
+.s-foot{background:#0A1B4A;color:rgba(255,255,255,.7);padding:26px 22px;font-size:12.5px;display:flex;flex-direction:column;gap:10px}
+.s-foot .pw{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:11.5px}
+.s-foot .pw img{height:9px;opacity:.85}
+.s-float{position:fixed;right:18px;bottom:18px;z-index:30}
+.s-float a{width:56px;height:56px;border-radius:50%;background:#25D366;color:#04163F;display:grid;place-items:center;box-shadow:0 10px 24px rgba(4,22,63,.25)}
+.s-float svg{width:26px;height:26px}
+.phone .s-float{display:none}
+@container (min-width:720px){
+  .s-top{padding:18px 48px}
+  .s-hero{padding:80px 48px 90px}
+  .s-hero::after{width:420px;height:420px;border-radius:0 0 0 420px;right:-80px;top:-80px}
+  .s-hero h1{font-size:52px;max-width:680px}
+  .s-hero p{font-size:18px;max-width:560px}
+  .s-sec{padding:64px 48px}
+  .s-sec h2{font-size:36px}
+  .s-prods{grid-template-columns:repeat(3,1fr);gap:14px}
+  .s-formgrid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .s-card{margin-top:0;padding:30px}
+  .s-foot{padding:28px 48px;flex-direction:row;justify-content:space-between;align-items:center}
+}
+.prevbar{position:sticky;top:0;z-index:40;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;font-size:13px}
+.prevbar .btn{padding:7px 14px;font-size:12.5px}
+
+/* modal produto */
+.s-modal{position:fixed;inset:0;background:rgba(4,22,63,.5);display:grid;place-items:center;z-index:60;padding:20px}
+.s-modal .in{background:#fff;border-radius:22px;padding:26px;max-width:420px;width:100%}
+
+@media (max-width:1100px){.editor{grid-template-columns:1fr}.preview-wrap{position:static;max-width:380px}}
+@media (max-width:860px){
+  .login{grid-template-columns:1fr}.login .side{min-height:300px;padding:32px 24px}
+  .shell{grid-template-columns:1fr}
+  .sb{position:sticky;height:auto;flex-direction:row;align-items:center;padding:10px 12px;gap:10px;overflow-x:auto;z-index:20}
+  .sb > img,.sb .me,.sb .out{display:none}
+  .sb nav{flex-direction:row}
+  .sb nav a{white-space:nowrap;padding:9px 12px;font-size:13px}
+  .main{padding:24px 18px 50px}
+  .g2,.g3,.prodpick{grid-template-columns:1fr}
+  .lead{grid-template-columns:40px 1fr auto}
+  .lead .hide-m{display:none}
+  .lead-d dl{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="app">
+
+<!-- ================= LOGIN ================= -->
+<section class="view" id="v-login">
+  <div class="login">
+    <div class="side">
+      <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <img src="img/logo-white.png" alt="PARCER">
+      <h1>A estrutura é nossa. <b>A marca é sua.</b></h1>
+      <p>Monte sua página, personalize com a sua logo e as suas cores e divulgue seus links. Os leads chegam direto para você.</p>
+      <ul>
+        <li><span data-i="check"></span>Página de captura com a sua marca</li>
+        <li><span data-i="check"></span>14 formulários prontos para enviar como link</li>
+        <li><span data-i="check"></span>Seus leads organizados em um só lugar</li>
+      </ul>
+    </div>
+    <div class="box">
+      <form id="login-form" novalidate>
+        <h2>Entre na sua <b>conta.</b></h2>
+        <p class="hint">Acesse o painel da sua corretora.</p>
+        <div class="f"><label for="l-email">E-mail</label><input id="l-email" type="email" autocomplete="username" placeholder="voce@suacorretora.com.br" value="contato@horizonteseguros.com.br"></div>
+        <div class="f"><label for="l-pass">Senha</label><input id="l-pass" type="password" autocomplete="current-password" placeholder="Sua senha" value="parcer2026"></div>
+        <button class="btn" type="submit">Entrar</button>
+        <div class="links"><a href="#" data-soon="Recuperação de senha por e-mail (no sistema real).">Esqueci minha senha</a><a href="index.html">Voltar ao portal</a></div>
+        <div class="demo-note"><b>Protótipo:</b> qualquer e-mail e senha entram. Os dados ficam só neste navegador.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= APP ================= -->
+<div class="shell" id="shell" hidden>
+  <aside class="sb">
+    <img src="img/logo-white.png" alt="PARCER">
+    <div class="me"><div class="lg" id="sb-logo"></div><div><b id="sb-nome"></b><small>Corretora parceira</small></div></div>
+    <nav id="sb-nav">
+      <a href="#painel" data-v="painel"><span data-i="grid"></span>Início</a>
+      <a href="#marca" data-v="marca"><span data-i="image"></span>Minha marca</a>
+      <a href="#pagina" data-v="pagina"><span data-i="home"></span>Minha página</a>
+      <a href="#formularios" data-v="formularios"><span data-i="doc"></span>Formulários</a>
+      <a href="#leads" data-v="leads"><span data-i="users"></span>Meus leads <span class="ct" id="ct-leads"></span></a>
+      <a href="index.html"><span data-i="folder"></span>Materiais Parcer</a>
+    </nav>
+    <a href="#login" class="out" id="logout"><span data-i="back"></span>Sair</a>
+  </aside>
+
+  <main class="main">
+
+    <!-- PAINEL -->
+    <section class="view" id="v-painel">
+      <div class="ph"><div><div class="ey">Painel do corretor</div><h1>Olá, <b id="hi-nome"></b></h1><p>Tudo pronto para divulgar a sua marca hoje.</p></div>
+        <a class="btn" href="#site">Ver minha página <span style="display:inline-flex;width:14px" data-i="arrow"></span></a></div>
+      <div class="g3">
+        <div class="pane stat"><small>Leads este mês</small><div class="n"><b id="st-leads">0</b></div><small id="st-novos"></small></div>
+        <div class="pane stat"><small>Visitas na sua página</small><div class="n">248</div><small>Últimos 30 dias (simulado)</small></div>
+        <div class="pane stat"><small>Formulários disponíveis</small><div class="n">1<span style="font-size:22px;color:var(--muted)"> / 14</span></div><small>Os outros 13 em produção</small></div>
+      </div>
+      <div class="g2" style="margin-top:18px">
+        <div class="pane">
+          <h3>Seu link</h3><p class="sub">Coloque na bio do Instagram, no status do WhatsApp e na assinatura do e-mail.</p>
+          <div class="linkbox"><code id="my-link"></code><button class="btn" data-copylink><span data-i="copy"></span>Copiar</button></div>
+          <div class="linkbox" style="margin-top:10px"><code id="my-link-saude"></code><button class="btn ghost" data-copylink="saude">Copiar</button></div>
+        </div>
+        <div class="pane">
+          <h3>Primeiros passos</h3><p class="sub">Complete para deixar sua página no ponto.</p>
+          <ul class="check" id="onb"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARCA -->
+    <section class="view" id="v-marca">
+      <div class="ph"><div><div class="ey">Minha marca</div><h1>Sua identidade, <b>em todo lugar.</b></h1><p>O que você definir aqui aparece na sua página e em todos os formulários.</p></div></div>
+      <div class="editor">
+        <div>
+          <div class="pane">
+            <div class="sec-t">Logo</div>
+            <div class="upl">
+              <div class="lgbig" id="m-logo-prev">Sem logo</div>
+              <div class="btns">
+                <label class="btn" style="cursor:pointer"><span data-i="image"></span>Enviar logo<input type="file" id="m-logo" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden></label>
+                <button class="btn ghost" id="m-logo-rm" type="button">Remover</button>
+                <small>PNG ou SVG com fundo transparente fica melhor.</small>
+              </div>
+            </div>
+          </div>
+          <div class="pane">
+            <div class="sec-t">Cor principal</div>
+            <div class="sw" id="m-sw"></div>
+            <div class="cnote"><span data-i="shieldCheck"></span><span id="m-cnote">Escolha a cor da sua marca. Se ela ficar difícil de ler, ajustamos o tom automaticamente.</span></div>
+          </div>
+          <div class="pane">
+            <div class="sec-t">Dados da corretora</div>
+            <div class="fg">
+              <div class="f"><label for="m-nome">Nome da corretora</label><input id="m-nome" data-k="nome"></div>
+              <div class="f s3"><label for="m-whats">WhatsApp</label><input id="m-whats" data-k="whats" inputmode="tel" data-mask="tel" placeholder="(61) 90000-0000"></div>
+              <div class="f s3"><label for="m-email">E-mail</label><input id="m-email" data-k="email" type="email"></div>
+              <div class="f s3"><label for="m-insta">Instagram</label><input id="m-insta" data-k="insta" placeholder="@suacorretora"></div>
+              <div class="f s3"><label for="m-susep">SUSEP</label><input id="m-susep" data-k="susep" placeholder="Opcional"></div>
+              <div class="f s3"><label for="m-cidade">Cidade / UF</label><input id="m-cidade" data-k="cidade" placeholder="Brasília/DF"></div>
+              <div class="f s3"><label for="m-slug">Endereço da página</label><input id="m-slug" data-k="slug"></div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-wrap"><div class="lb"><span>Prévia ao vivo</span><a href="#site" style="color:var(--royal);letter-spacing:0;text-transform:none;font-size:12.5px">Abrir em tela cheia</a></div><div class="phone"><div class="scr"><div class="site" id="prev-marca"></div></div></div></div>
+      </div>
+    </section>
+
+    <!-- PÁGINA -->
+    <section class="view" id="v-pagina">
+      <div class="ph"><div><div class="ey">Minha página</div><h1>Monte sua página <b>de captura.</b></h1><p>Escolha a mensagem principal e os produtos que você quer vender.</p></div></div>
+      <div class="editor">
+        <div>
+          <div class="pane">
+            <div class="sec-t">Mensagem principal</div>
+            <div class="heads" id="p-heads"></div>
+            <div class="f" style="margin-top:14px"><label for="p-sub">Texto de apoio</label><input id="p-sub" data-k="sub"></div>
+          </div>
+          <div class="pane">
+            <div class="sec-t">Produtos na página</div>
+            <div class="prodpick" id="p-prods"></div>
+          </div>
+          <div class="pane">
+            <div class="sec-t">Sobre você</div>
+            <div class="f"><label for="p-sobre">Apresentação curta</label><input id="p-sobre" data-k="sobre"></div>
+          </div>
+        </div>
+        <div class="preview-wrap"><div class="lb"><span>Prévia ao vivo</span><a href="#site" style="color:var(--royal);letter-spacing:0;text-transform:none;font-size:12.5px">Abrir em tela cheia</a></div><div class="phone"><div class="scr"><div class="site" id="prev-pagina"></div></div></div></div>
+      </div>
+    </section>
+
+    <!-- FORMULÁRIOS -->
+    <section class="view" id="v-formularios">
+      <div class="ph"><div><div class="ey">Formulários</div><h1>Seus formulários, <b>com a sua marca.</b></h1><p>Copie o link e envie para o cliente. As respostas chegam no seu WhatsApp e ficam salvas em Meus leads.</p></div></div>
+      <div class="card flist" id="f-list"></div>
+    </section>
+
+    <!-- LEADS -->
+    <section class="view" id="v-leads">
+      <div class="ph"><div><div class="ey">Meus leads</div><h1>Quem quer falar <b>com você.</b></h1><p>Tudo o que chega pela sua página e pelos formulários.</p></div></div>
+      <div class="filters" id="l-filt">
+        <button class="on" data-s="todos">Todos</button><button data-s="novo">Novos</button><button data-s="contato">Em contato</button><button data-s="fechado">Fechados</button>
+      </div>
+      <div class="card" id="l-list"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================= PÁGINA PÚBLICA ================= -->
+<section class="view" id="v-site">
+  <div class="prevbar" id="prevbar"><span>Você está vendo a sua página como o cliente vê.</span><a class="btn line" href="#pagina">Voltar ao painel</a></div>
+  <div class="site" id="site-full"></div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/parcer.js"></script>
+<script>
+/* ================================================================
+   PROTÓTIPO · Painel do Corretor Parcer
+   Dados guardados no navegador (localStorage). No sistema real:
+   login + banco de dados + armazenamento de logos (ver especificação).
+   ================================================================ */
+const KEY_P='parcer-proto-perfil', KEY_L='parcer-proto-leads', KEY_S='parcer-proto-sessao';
+const mem={};
+const store={ get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(_){ return k in mem?mem[k]:d; } },
+              set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(_){ mem[k]=v; } } };
+
+const PRODUTOS = {
+  auto:{t:"Seguro Auto",d:"Seu carro protegido, com assistência 24h.",i:"car"},
+  residencial:{t:"Seguro Residencial",d:"Tranquilidade para sua casa e sua família.",i:"home"},
+  vida:{t:"Seguro de Vida",d:"Proteção para quem você ama.",i:"heart"},
+  saude:{t:"Plano de Saúde",d:"Encontre o plano ideal para você.",i:"pulse",form:"formulario-saude.html"},
+  viagem:{t:"Seguro Viagem",d:"Viaje sem se preocupar com imprevistos.",i:"plane"},
+  empresarial:{t:"Seguro Empresarial",d:"Proteção para o seu negócio.",i:"building"},
+  consorcio:{t:"Consórcio",d:"Planeje a compra do imóvel ou do carro.",i:"key"},
+  pet:{t:"Seguro Pet",d:"Cuidado para quem é da família.",i:"shield"},
+  moto:{t:"Seguro Moto",d:"Proteção para quem vive sobre duas rodas.",i:"truck"},
+  rc:{t:"Responsabilidade Civil",d:"Segurança para a sua atividade profissional.",i:"scale"}
+};
+const HEADS=[
+  "Proteção para o que <b>importa para você.</b>",
+  "Seguro bom é seguro <b>bem explicado.</b>",
+  "Imprevistos acontecem. <b>A gente cuida.</b>"
+];
+const CORES=["#0F766E","#1D4FE8","#04163F","#7C3AED","#B91C1C","#C2410C","#CA8A04","#15803D","#0E7490","#BE185D","#334155"];
+const FORMS=[["Saúde","pulse","formulario-saude.html"],["Vida Individual","heart"],["Vida em Grupo","users"],["PME","building"],["Frota","car"],["Seguro Viagem","plane"],["Garantia","shieldCheck"],["Responsabilidade Civil","scale"],["Obras","hardhat"],["Riscos de Engenharia","crane"],["Equipamentos","cog"],["Instalação e Montagem","wrench"],["Transporte","truck"],["Agrícola","leaf"]];
+
+const PADRAO={ nome:"Horizonte Corretora de Seguros", whats:"(61) 99123-4567", email:"contato@horizonteseguros.com.br", insta:"@horizonteseguros",
+  susep:"", cidade:"Brasília/DF", slug:"horizonte", cor:"#0F766E", logo:"", head:0,
+  sub:"Cotamos nas principais seguradoras do país e encontramos a melhor opção para você, sem complicação.",
+  sobre:"Somos uma corretora com atendimento próximo, do primeiro contato ao sinistro.",
+  prods:["auto","residencial","vida","saude","consorcio","pet"] };
+let P = Object.assign({}, PADRAO, store.get(KEY_P,{}));
+let LEADS = store.get(KEY_L,null);
+if(!LEADS){ const d=n=>new Date(Date.now()-n*864e5).toISOString();
+  LEADS=[
+    {id:1,nome:"Ana Paula Ribeiro",tel:"(61) 98412-3355",produto:"Plano de Saúde",origem:"Formulário Saúde",status:"novo",data:d(0),det:{"Coparticipação":"Sim","Abrangência":"Nacional","Profissão":"Professora"}},
+    {id:2,nome:"Carlos Eduardo Lima",tel:"(61) 99231-0088",produto:"Seguro Auto",origem:"Página de captura",status:"contato",data:d(2),det:{}},
+    {id:3,nome:"Juliana Costa",tel:"(61) 98110-7712",produto:"Seguro Residencial",origem:"Página de captura",status:"novo",data:d(3),det:{}},
+    {id:4,nome:"Roberto Almeida",tel:"(61) 99654-2210",produto:"Consórcio",origem:"Página de captura",status:"fechado",data:d(9),det:{}}
+  ]; store.set(KEY_L,LEADS); }
+
+/* ---------- cor: contraste automático ---------- */
+const hx=h=>{h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');return[0,2,4].map(i=>parseInt(h.substr(i,2),16))};
+const toHex=a=>'#'+a.map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,'0')).join('');
+const lum=h=>{const a=hx(h).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*a[0]+.7152*a[1]+.0722*a[2]};
+const contrast=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+const mix=(a,b,t)=>{const x=hx(a),y=hx(b);return toHex(x.map((v,i)=>v+(y[i]-v)*t))};
+function theme(cor){
+  let b=cor, ajustou=false;
+  for(let t=.08;contrast(b,'#ffffff')<3.2&&t<=.9;t+=.08){ b=mix(cor,'#04163F',t); ajustou=true; }
+  let bd=mix(b,'#0B0D12',.42);
+  return { b, bd, bt:'#ffffff', bl:mix(b,'#ffffff',.9), ajustou };
+}
+function applyTheme(el){ const t=theme(P.cor); el.style.setProperty('--b',t.b); el.style.setProperty('--bd',t.bd); el.style.setProperty('--bt',t.bt); el.style.setProperty('--bl',t.bl); return t; }
+
+/* ---------- helpers ---------- */
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const iniciais=n=>(n||'').split(/\s+/).filter(w=>w.length>2&&!/^(de|da|do|dos|das)$/i.test(w)).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'C';
+const digits=s=>(s||'').replace(/\D/g,'');
+const waNum=()=>{const d=digits(P.whats);return d? (d.length<=11?'55'+d:d) : '556131426161'};
+const pageURL=()=>`parcerseguros.com.br/c/${P.slug||'suacorretora'}`;
+const WA='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>';
+function logoHTML(){ return P.logo ? `<img src="${P.logo}" alt="${esc(P.nome)}">` : `<span class="mono">${iniciais(P.nome)}</span><span>${esc(P.nome)}</span>`; }
+function saveP(){ store.set(KEY_P,P); }
+function saveL(){ store.set(KEY_L,LEADS); }
+
+/* ---------- página de captura ---------- */
+function siteHTML(){
+  const prods=P.prods.filter(k=>PRODUTOS[k]);
+  return `
+  <div class="s-top"><div class="s-logo">${logoHTML()}</div><a class="s-btn sm wa" href="https://wa.me/${waNum()}" target="_blank" rel="noopener">${WA}WhatsApp</a></div>
+  <div class="s-hero">
+    <div class="ey">${esc(P.nome)}${P.cidade?' · '+esc(P.cidade):''}</div>
+    <h1>${HEADS[P.head]||HEADS[0]}</h1>
+    <p>${esc(P.sub)}</p>
+    <div class="acts"><a class="s-btn" href="#cotacao" data-scroll>Quero uma cotação</a><a class="s-btn wa" href="https://wa.me/${waNum()}" target="_blank" rel="noopener">${WA}Chama no WhatsApp</a></div>
+    <div class="s-trust"><span>${ic('shieldCheck')}Principais seguradoras</span><span>${ic('users')}Atendimento humano</span><span>${ic('lock')}Seus dados protegidos</span></div>
+  </div>
+  <div class="s-sec">
+    <div class="s-ey">O que fazemos</div>
+    <h2>Escolha o que você quer <b>proteger.</b></h2>
+    <div class="s-prods">${prods.map(k=>{const p=PRODUTOS[k];return `<button type="button" class="s-prod" data-prod="${k}"><span class="i">${ic(p.i)}</span><span><b>${p.t}</b><small>${p.d}</small></span><span class="ar">${ic('arrow')}</span></button>`}).join('') || '<p class="lead-t">Escolha os produtos em Minha página.</p>'}</div>
+  </div>
+  <div class="s-sec s-form" id="cotacao"><div class="s-formgrid">
+    <div><div class="s-ey">Cotação sem compromisso</div><h2>Conta pra gente o que você precisa. <b>A gente cuida do resto.</b></h2><p class="lead-t">Deixe seu contato. Respondemos rápido, pelo canal que você preferir.</p></div>
+    <form class="s-card" data-lead novalidate>
+      <div class="s-f"><label>Seu nome</label><input name="nome" autocomplete="name" placeholder="Nome completo"></div>
+      <div class="s-f"><label>Seu WhatsApp</label><input name="tel" inputmode="tel" data-mask="tel" placeholder="(00) 00000-0000"></div>
+      <div class="s-f"><label>Tenho interesse em</label><select name="produto"><option value="">Selecione</option>${prods.map(k=>`<option>${PRODUTOS[k].t}</option>`).join('')}<option>Outro</option></select></div>
+      <label class="s-cons"><input type="checkbox" name="lgpd">Autorizo o contato e o uso dos meus dados para cotação, conforme a LGPD.</label>
+      <button class="s-btn" style="width:100%;justify-content:center" type="submit">Quero ser atendido</button>
+    </form>
+  </div></div>
+  <div class="s-sec s-about">
+    <div class="s-ey">Quem somos</div>
+    <h2>${esc(P.nome)}<b>.</b></h2>
+    <p class="lead-t">${esc(P.sobre)}</p>
+    <div class="chips">${P.cidade?`<span>${ic('home')}${esc(P.cidade)}</span>`:''}${P.insta?`<span>${ic('image')}${esc(P.insta)}</span>`:''}${P.susep?`<span>${ic('doc')}SUSEP ${esc(P.susep)}</span>`:''}</div>
+  </div>
+  <div class="s-foot"><span>© ${new Date().getFullYear()} ${esc(P.nome)}${P.email?' · '+esc(P.email):''}</span><span class="pw">com tecnologia <img src="img/logo-white.png" alt="PARCER"></span></div>
+  <div class="s-float"><a href="https://wa.me/${waNum()}" target="_blank" rel="noopener" aria-label="WhatsApp">${WA}</a></div>`;
+}
+function renderSites(){ ['prev-marca','prev-pagina','site-full'].forEach(id=>{const el=document.getElementById(id); if(!el) return; applyTheme(el); el.innerHTML=siteHTML();}); }
+
+/* interações dentro da página de captura (prévia e tela cheia) */
+document.addEventListener('click',e=>{
+  const pr=e.target.closest('.s-prod');
+  if(pr){ const p=PRODUTOS[pr.dataset.prod]; const root=pr.closest('.site');
+    if(p.form){ location.href=p.form; return; }
+    const sel=root.querySelector('select[name=produto]'); sel.value=p.t; root.querySelector('#cotacao').scrollIntoView({behavior:'smooth',block:'start'}); return; }
+  const sc=e.target.closest('[data-scroll]');
+  if(sc){ e.preventDefault(); sc.closest('.site').querySelector('#cotacao').scrollIntoView({behavior:'smooth',block:'start'}); }
+});
+document.addEventListener('input',e=>{ if(e.target.matches('.site [data-mask=tel], #m-whats')) e.target.value=telMask(e.target.value); });
+function telMask(v){ v=digits(v).slice(0,11); if(v.length>10) return v.replace(/(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3'); if(v.length>6) return v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3'); if(v.length>2) return v.replace(/(\d{2})(\d+)/,'($1) $2'); return v; }
+document.addEventListener('submit',e=>{
+  const f=e.target.closest('form[data-lead]'); if(!f) return; e.preventDefault();
+  const v=Object.fromEntries(new FormData(f)); let ok=true;
+  [['nome',v.nome && v.nome.trim().length>2],['tel',digits(v.tel).length>=10],['produto',!!v.produto]].forEach(([n,good])=>{ f.querySelector(`[name=${n}]`).closest('.s-f').classList.toggle('err',!good); if(!good) ok=false; });
+  if(!f.lgpd.checked){ toast('Para continuar, marque a autorização.'); ok=false; }
+  if(!ok) return;
+  LEADS.unshift({id:Date.now(),nome:v.nome.trim(),tel:v.tel,produto:v.produto,origem:"Página de captura",status:"novo",data:new Date().toISOString(),det:{}}); saveL(); renderLeads(); renderPainel();
+  const msg=`Olá, ${P.nome}! Sou ${v.nome.trim()} e tenho interesse em ${v.produto}. Meu WhatsApp: ${v.tel}`;
+  const url=`https://wa.me/${waNum()}?text=${encodeURIComponent(msg)}`;
+  f.innerHTML=`<div class="s-ok"><div class="c">${ic('check')}</div><h3 style="font-size:20px;font-weight:300">Recebemos, <b style="font-weight:700;color:var(--b)">${esc(v.nome.split(' ')[0])}.</b></h3><p class="lead-t" style="margin:8px 0 16px">Em breve entramos em contato. Se preferir, chama agora no WhatsApp.</p><a class="s-btn wa" href="${url}" target="_blank" rel="noopener">${WA}Abrir WhatsApp</a></div>`;
+  toast('Lead salvo em Meus leads.');
+});
+
+/* ---------- painel ---------- */
+function renderShell(){
+  document.getElementById('sb-logo').innerHTML = P.logo?`<img src="${P.logo}" alt="">`:`<span style="color:${theme(P.cor).b}">${iniciais(P.nome)}</span>`;
+  document.getElementById('sb-nome').textContent=P.nome;
+  const novos=LEADS.filter(l=>l.status==='novo').length;
+  document.getElementById('ct-leads').textContent=novos||''; document.getElementById('ct-leads').hidden=!novos;
+}
+function renderPainel(){
+  document.getElementById('hi-nome').textContent=(P.nome.split(' ')[0]||'')+'.';
+  const mes=LEADS.filter(l=>new Date(l.data).getMonth()===new Date().getMonth()).length;
+  document.getElementById('st-leads').textContent=mes;
+  const novos=LEADS.filter(l=>l.status==='novo').length;
+  document.getElementById('st-novos').textContent=novos?`${novos} aguardando contato`:'Nenhum novo';
+  document.getElementById('my-link').textContent=pageURL();
+  document.getElementById('my-link-saude').textContent=pageURL()+'/saude';
+  const steps=[
+    ['Envie sua logo',!!P.logo,'#marca'],
+    ['Escolha a cor da sua marca',P.cor!==PADRAO.cor,'#marca'],
+    ['Confira seu WhatsApp',digits(P.whats).length>=10,'#marca'],
+    ['Escolha os produtos da página',P.prods.length>0,'#pagina'],
+    ['Divulgue seu link',!!store.get('parcer-proto-copiou',false),'#painel']
+  ];
+  document.getElementById('onb').innerHTML=steps.map(([t,ok,h])=>`<li class="${ok?'ok':''}"><span class="c">${ok?ic('check'):''}</span><span class="t">${t}</span>${ok?'':`<a href="${h}">Fazer</a>`}</li>`).join('');
+  renderShell();
+}
+
+/* marca */
+function renderMarca(){
+  document.querySelectorAll('[data-k]').forEach(el=>{ el.value=P[el.dataset.k]||''; });
+  const lp=document.getElementById('m-logo-prev'); lp.innerHTML=P.logo?`<img src="${P.logo}" alt="">`:'Sem logo';
+  const sw=document.getElementById('m-sw');
+  sw.innerHTML=CORES.map(c=>`<button type="button" style="background:${c}" data-cor="${c}" class="${c.toLowerCase()===P.cor.toLowerCase()?'on':''}" aria-label="Cor ${c}"></button>`).join('')+
+    `<label class="custom"><input type="color" id="m-cor" value="${P.cor}">Outra cor</label>`;
+  const t=theme(P.cor);
+  document.getElementById('m-cnote').textContent = t.ajustou ? `Essa cor é clara demais para botões e textos. Usamos um tom mais escuro (${t.b.toUpperCase()}) para manter a leitura.` : 'Boa leitura garantida: botões e textos ficam legíveis com essa cor.';
+}
+document.addEventListener('input',e=>{
+  const k=e.target.dataset.k; if(!k) return;
+  let v=e.target.value; if(k==='slug'){ v=v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-'); e.target.value=v; }
+  P[k]=v; saveP(); renderSites(); renderShell();
+});
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-cor]'); if(!b) return; P.cor=b.dataset.cor; saveP(); renderMarca(); renderSites(); renderShell(); });
+document.addEventListener('input',e=>{ if(e.target.id==='m-cor'){ P.cor=e.target.value; saveP(); renderSites(); renderShell(); const t=theme(P.cor); document.getElementById('m-cnote').textContent=t.ajustou?`Essa cor é clara demais para botões e textos. Usamos um tom mais escuro (${t.b.toUpperCase()}) para manter a leitura.`:'Boa leitura garantida: botões e textos ficam legíveis com essa cor.'; document.querySelectorAll('#m-sw button').forEach(x=>x.classList.remove('on')); } });
+document.getElementById('m-logo').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  if(f.size>3e6){ toast('Arquivo grande demais. Use até 3 MB.'); return; }
+  const r=new FileReader(); r.onload=()=>{
+    if(f.type==='image/svg+xml'){ P.logo=r.result; done(); return; }
+    const img=new Image(); img.onload=()=>{ const s=Math.min(1,480/img.width); const c=document.createElement('canvas'); c.width=img.width*s; c.height=img.height*s; c.getContext('2d').drawImage(img,0,0,c.width,c.height); P.logo=c.toDataURL('image/png'); done(); }; img.src=r.result; };
+  r.readAsDataURL(f);
+  function done(){ saveP(); renderMarca(); renderSites(); renderShell(); toast('Logo atualizada.'); }
+});
+document.getElementById('m-logo-rm').onclick=()=>{ P.logo=''; saveP(); renderMarca(); renderSites(); renderShell(); };
+
+/* página */
+function renderPagina(){
+  document.getElementById('p-heads').innerHTML=HEADS.map((h,i)=>`<label><input type="radio" name="head" value="${i}" ${+P.head===i?'checked':''}><span>${h.replace(/<\/?b>/g,'')}</span></label>`).join('');
+  document.getElementById('p-prods').innerHTML=Object.entries(PRODUTOS).map(([k,p])=>`<label><input type="checkbox" value="${k}" ${P.prods.includes(k)?'checked':''}><span class="ico">${ic(p.i)}</span>${p.t}<span class="tick">${ic('check')}</span></label>`).join('');
+  document.getElementById('p-sub').value=P.sub; document.getElementById('p-sobre').value=P.sobre;
+}
+document.getElementById('p-heads').addEventListener('change',e=>{ P.head=+e.target.value; saveP(); renderSites(); });
+document.getElementById('p-prods').addEventListener('change',()=>{ P.prods=[...document.querySelectorAll('#p-prods input:checked')].map(i=>i.value); saveP(); renderSites(); });
+
+/* formulários */
+function renderForms(){
+  document.getElementById('f-list').innerHTML=FORMS.map(([n,i,url])=>`
+    <div class="row ${url?'':'off'}"><span class="ico">${ic(i)}</span><span class="lbl">${n}${url?'':'<span class="pill soft">Em produção</span>'}</span>
+    ${url?`<span class="acts"><a class="btn ghost" href="${url}">Ver como o cliente vê</a><button class="btn" data-copylink="saude">${ic('link')}Copiar link</button></span>`:''}</div>`).join('');
+}
+
+/* leads */
+let filtro='todos';
+const STL={novo:'Novo',contato:'Em contato',fechado:'Fechado'};
+function renderLeads(){
+  const list=LEADS.filter(l=>filtro==='todos'||l.status===filtro);
+  document.getElementById('l-list').innerHTML = list.length ? list.map(l=>`
+    <div class="lead" data-id="${l.id}">
+      <span class="av">${iniciais(l.nome)}</span>
+      <span><b>${esc(l.nome)}</b><small>${esc(l.tel)}</small></span>
+      <span class="hide-m"><b style="font-weight:500">${esc(l.produto)}</b><small>${esc(l.origem)}</small></span>
+      <span class="hide-m"><small>${new Date(l.data).toLocaleDateString('pt-BR')}</small></span>
+      <span class="st ${l.status}">${STL[l.status]}</span>
+      <div class="lead-d">
+        <dl><dt>Produto</dt><dd>${esc(l.produto)}</dd><dt>Origem</dt><dd>${esc(l.origem)}</dd><dt>Recebido em</dt><dd>${new Date(l.data).toLocaleString('pt-BR')}</dd>
+        ${Object.entries(l.det||{}).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
+        <div class="acts">
+          <a class="btn wa" href="https://wa.me/55${digits(l.tel)}?text=${encodeURIComponent(`Olá, ${l.nome.split(' ')[0]}! Aqui é da ${P.nome}. Recebemos seu interesse em ${l.produto}.`)}" target="_blank" rel="noopener">${WA}Chamar no WhatsApp</a>
+          <select data-status="${l.id}">${Object.entries(STL).map(([k,v])=>`<option value="${k}" ${l.status===k?'selected':''}>${v}</option>`).join('')}</select>
+        </div>
+      </div>
+    </div>`).join('') : '<div class="empty">Nenhum lead aqui ainda.</div>';
+  renderShell();
+}
+document.getElementById('l-filt').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; filtro=b.dataset.s; document.querySelectorAll('#l-filt button').forEach(x=>x.classList.toggle('on',x===b)); renderLeads(); });
+document.getElementById('l-list').addEventListener('click',e=>{ if(e.target.closest('.lead-d')) return; const r=e.target.closest('.lead'); if(r) r.classList.toggle('open'); });
+document.getElementById('l-list').addEventListener('change',e=>{ const s=e.target.closest('[data-status]'); if(!s) return; const l=LEADS.find(x=>x.id==s.dataset.status); l.status=s.value; saveL(); const open=s.closest('.lead').dataset.id; renderLeads(); const el=document.querySelector(`.lead[data-id="${open}"]`); el&&el.classList.add('open'); renderPainel(); });
+
+/* copiar links */
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-copylink]'); if(!b) return;
+  const url='https://'+pageURL()+(b.dataset.copylink?'/'+b.dataset.copylink:'');
+  store.set('parcer-proto-copiou',true);
+  try{ await navigator.clipboard.writeText(url); toast('Link copiado: '+url); }catch(_){ toast(url); }
+  renderPainel();
+});
+
+/* ---------- login + rotas ---------- */
+document.getElementById('login-form').addEventListener('submit',e=>{ e.preventDefault(); store.set(KEY_S,true); location.hash='painel'; route(); });
+document.getElementById('logout').addEventListener('click',e=>{ e.preventDefault(); store.set(KEY_S,false); location.hash='login'; route(); });
+
+const APPV=['painel','marca','pagina','formularios','leads'];
+function route(){
+  let v=(location.hash||'').slice(1); const logged=store.get(KEY_S,false);
+  if(!logged && v!=='site') v='login';
+  if(logged && (!v||v==='login')) v='painel';
+  if(![...APPV,'login','site'].includes(v)) v='painel';
+  document.getElementById('v-login').classList.toggle('on',v==='login');
+  document.getElementById('v-site').classList.toggle('on',v==='site');
+  document.getElementById('prevbar').hidden=!logged;
+  document.getElementById('shell').hidden=!APPV.includes(v);
+  APPV.forEach(x=>document.getElementById('v-'+x).classList.toggle('on',x===v));
+  document.querySelectorAll('#sb-nav a[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- init ---------- */
+document.querySelectorAll('[data-i]').forEach(el=>{ el.innerHTML=ic(el.dataset.i); if(el.tagName==='SPAN'&&!el.className) el.style.display='inline-flex'; });
+renderMarca(); renderPagina(); renderForms(); renderLeads(); renderPainel(); renderSites(); route();
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formulário de Adesão · Plano de Saúde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/parcer.css">
+</head>
+<body class="form-page">
+
+<!-- Cabeçalho co-branding: corretora parceira + PARCER -->
+<header class="top">
+  <div class="wrap" style="max-width:800px">
+    <div class="cobrand">
+      <div class="cor"><span class="av" id="cor-av">CP</span><div><small>Sua corretora</small><b id="cor-nome">Corretora parceira</b></div></div>
+      <img src="img/logo-navy.png" alt="PARCER">
+    </div>
+  </div>
+</header>
+
+<div class="f-wrap">
+  <div class="f-hero">
+    <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="ey" style="font-size:11.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--sky)">Plano de saúde · Adesão</div>
+    <h1>Vamos encontrar o plano <b>ideal para você.</b></h1>
+    <p>Leva cerca de 3 minutos. Suas respostas vão direto para o seu corretor, que entra em contato com as melhores opções.</p>
+  </div>
+
+  <div class="progress" id="prog"></div>
+  <div class="stepinfo"><span id="st-name"></span><span>Etapa <b id="st-n">1</b> de <span id="st-t"></span></span></div>
+
+  <form id="form" novalidate>
+
+    <!-- 1. DADOS -->
+    <section class="fs" data-step="Seus dados">
+      <h2>Primeiro, <b>seus dados.</b></h2>
+      <p class="hint">Usamos só para montar a sua proposta.</p>
+      <div class="fg">
+        <div class="f"><label for="nome">Nome completo <i>*</i></label><input id="nome" name="Nome completo" autocomplete="name" required><span class="em">Informe seu nome completo.</span></div>
+        <div class="f s3"><label for="cpf">CPF <i>*</i></label><input id="cpf" name="CPF" inputmode="numeric" placeholder="000.000.000-00" data-mask="cpf" required><span class="em">CPF inválido.</span></div>
+        <div class="f s3"><label for="nasc">Data de nascimento <i>*</i></label><input id="nasc" name="Data de nascimento" type="date" required><span class="em">Informe a data.</span></div>
+        <div class="f s3"><label for="tel">Telefone com DDD <i>*</i></label><input id="tel" name="Telefone" inputmode="tel" autocomplete="tel" placeholder="(61) 90000-0000" data-mask="tel" required><span class="em">Telefone inválido.</span></div>
+        <div class="f s3"><label for="email">E-mail <i>*</i></label><input id="email" name="E-mail" type="email" autocomplete="email" placeholder="voce@email.com" required><span class="em">E-mail inválido.</span></div>
+      </div>
+    </section>
+
+    <!-- 2. SOBRE VOCÊ -->
+    <section class="fs" data-step="Sobre você">
+      <h2>Agora, um pouco <b>sobre você.</b></h2>
+      <p class="hint">Isso ajuda a encontrar planos com condições especiais.</p>
+      <div class="fg">
+        <div class="f"><span class="lb">Gênero <i>*</i></span>
+          <div class="seg" data-req="Gênero">
+            <label><input type="radio" name="Gênero" value="Feminino"><span>Feminino</span></label>
+            <label><input type="radio" name="Gênero" value="Masculino"><span>Masculino</span></label>
+            <label><input type="radio" name="Gênero" value="Outro"><span>Outro</span></label>
+            <label><input type="radio" name="Gênero" value="Prefiro não informar"><span>Prefiro não informar</span></label>
+          </div><span class="em">Escolha uma opção.</span></div>
+        <div class="f s3"><label for="civil">Estado civil <i>*</i></label>
+          <select id="civil" name="Estado civil" required>
+            <option value="">Selecione</option><option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option><option>Divorciado(a)</option><option>Viúvo(a)</option>
+          </select><span class="em">Selecione uma opção.</span></div>
+        <div class="f s3"><label for="prof">Qual é a sua profissão? <i>*</i></label><input id="prof" name="Profissão" required><span class="em">Informe sua profissão.</span></div>
+        <div class="f s2"><span class="lb">Possui carteira assinada? <i>*</i></span>
+          <div class="seg" data-req="Carteira assinada"><label><input type="radio" name="Carteira assinada" value="Sim"><span>Sim</span></label><label><input type="radio" name="Carteira assinada" value="Não"><span>Não</span></label></div><span class="em">Escolha uma opção.</span></div>
+        <div class="f s2"><span class="lb">É estudante? <i>*</i></span>
+          <div class="seg" data-req="Estudante"><label><input type="radio" name="Estudante" value="Sim"><span>Sim</span></label><label><input type="radio" name="Estudante" value="Não"><span>Não</span></label></div><span class="em">Escolha uma opção.</span></div>
+        <div class="f s2"><span class="lb">Formação superior? <i>*</i></span>
+          <div class="seg" data-req="Formação superior"><label><input type="radio" name="Formação superior" value="Sim"><span>Sim</span></label><label><input type="radio" name="Formação superior" value="Não"><span>Não</span></label></div><span class="em">Escolha uma opção.</span></div>
+      </div>
+    </section>
+
+    <!-- 3. QUESTIONÁRIO -->
+    <section class="fs" data-step="Sobre o plano">
+      <h2>O que você procura <b>no seu plano.</b></h2>
+      <p class="hint">Não tem resposta certa. Se tiver dúvida, seu corretor ajuda.</p>
+      <div class="fg">
+        <div class="f s3"><span class="lb">Procura um plano com coparticipação? <i>*</i></span>
+          <div class="seg" data-req="Coparticipação"><label><input type="radio" name="Coparticipação" value="Sim"><span>Sim</span></label><label><input type="radio" name="Coparticipação" value="Não"><span>Não</span></label><label><input type="radio" name="Coparticipação" value="Não sei"><span>Não sei</span></label></div><span class="em">Escolha uma opção.</span></div>
+        <div class="f s3"><span class="lb">Plano regional ou nacional? <i>*</i></span>
+          <div class="seg" data-req="Abrangência"><label><input type="radio" name="Abrangência" value="Regional"><span>Regional</span></label><label><input type="radio" name="Abrangência" value="Nacional"><span>Nacional</span></label><label><input type="radio" name="Abrangência" value="Não sei"><span>Não sei</span></label></div><span class="em">Escolha uma opção.</span></div>
+        <div class="f"><span class="lb">Já teve algum plano de saúde? <i>*</i></span>
+          <div class="seg" data-req="Plano anterior"><label><input type="radio" name="Plano anterior" value="Sim"><span>Sim</span></label><label><input type="radio" name="Plano anterior" value="Não"><span>Não</span></label></div><span class="em">Escolha uma opção.</span></div>
+        <div class="f s3" data-if="Plano anterior=Sim" hidden><label for="qual">Qual era o plano? <i>*</i></label><input id="qual" name="Qual plano anterior" placeholder="Operadora e plano" data-cond-req><span class="em">Informe o plano.</span></div>
+        <div class="f s3" data-if="Plano anterior=Sim" hidden><label for="venc">Quando venceu? <i>*</i></label><input id="venc" name="Vencimento do plano anterior" type="month" data-cond-req><span class="em">Informe o mês.</span></div>
+        <div class="f"><span class="lb">Existem outras apólices vigentes para a mesma área segurada? <i>*</i></span>
+          <div class="seg" data-req="Outras apólices vigentes"><label><input type="radio" name="Outras apólices vigentes" value="Sim"><span>Sim</span></label><label><input type="radio" name="Outras apólices vigentes" value="Não"><span>Não</span></label></div><span class="em">Escolha uma opção.</span></div>
+      </div>
+    </section>
+
+    <!-- 4. ENDEREÇO -->
+    <section class="fs" data-step="Endereço">
+      <h2>Por último, <b>seu endereço.</b></h2>
+      <p class="hint">A rede de atendimento depende da sua região.</p>
+      <div class="fg">
+        <div class="f s2"><label for="cep">CEP <i>*</i></label><input id="cep" name="CEP" inputmode="numeric" placeholder="00000-000" data-mask="cep" autocomplete="postal-code" required><span class="em">CEP inválido.</span></div>
+        <div class="f s4"><label for="uf">UF <i>*</i></label>
+          <select id="uf" name="UF" required><option value="">Selecione</option></select><span class="em">Selecione o estado.</span></div>
+        <div class="f"><label for="end">Endereço <i>*</i></label><input id="end" name="Endereço" autocomplete="street-address" placeholder="Rua, número, complemento, bairro e cidade" required><span class="em">Informe o endereço.</span></div>
+      </div>
+    </section>
+
+    <!-- 5. REVISÃO -->
+    <section class="fs" data-step="Revisão">
+      <h2>Confira e <b>envie.</b></h2>
+      <p class="hint">Se algo estiver errado, toque em "Editar".</p>
+      <div class="review" id="review"></div>
+      <label class="consent"><input type="checkbox" id="lgpd"><span>Autorizo o uso dos meus dados para a cotação do plano de saúde, conforme a LGPD (Lei 13.709/2018).</span></label>
+      <div class="f" id="lgpd-f" style="margin-top:6px"><span class="em">Para enviar, marque a autorização.</span></div>
+    </section>
+
+    <!-- FIM -->
+    <section class="fs" data-step="Pronto" data-final>
+      <div class="done">
+        <div class="ok">${check}</div>
+        <h2>Tudo certo, <b><span id="done-nome">obrigado</span>.</b></h2>
+        <p class="hint" style="margin:8px auto 0;max-width:420px">Abrimos o WhatsApp com as suas respostas. É só tocar em enviar. Seu corretor vai entrar em contato com as opções.</p>
+        <div class="btns">
+          <a class="btn wa" id="wa-again" href="#" target="_blank" rel="noopener">Abrir o WhatsApp de novo</a>
+          <button type="button" class="btn ghost" id="copy-ans">Copiar respostas</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="f-acts" id="acts">
+      <button type="button" class="btn ghost" id="prev">Voltar</button>
+      <button type="button" class="btn" id="next">Continuar</button>
+      <button type="submit" class="btn wa" id="send" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>
+        Enviar pelo WhatsApp
+      </button>
+    </div>
+  </form>
+
+  <div class="secure"><span id="lock"></span>Seus dados ficam só entre você e o seu corretor.</div>
+</div>
+
+<div class="f-foot">
+  <img src="img/logo-navy.png" alt="PARCER">
+  Ser parceiro é ser Parcer.
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="js/parcer.js"></script>
+<script>
+/* =========================================================
+   CONFIGURAÇÃO DO CORRETOR
+   Quando hospedado no site da Parcer, cada corretor terá o link:
+   formulario-saude.html?corretor=Nome%20da%20Corretora&whats=5561999999999
+   Sem parâmetros, as respostas vão para o WhatsApp da Parcer.
+   ========================================================= */
+const PADRAO = { corretor: "Corretora parceira", whats: "556131426161" };
+let q; try { q = new URLSearchParams(location.search); } catch(_) { q = new URLSearchParams(); }
+const COR = {
+  nome: (q.get('corretor') || PADRAO.corretor).slice(0,60),
+  whats: (q.get('whats') || PADRAO.whats).replace(/\D/g,'')
+};
+/* Protótipo: se o corretor configurou a marca no painel, o formulário usa a marca dele */
+let PERFIL=null; try{ PERFIL=JSON.parse(localStorage.getItem('parcer-proto-perfil')||'null'); }catch(_){}
+if(PERFIL && !q.get('corretor')){
+  COR.nome = PERFIL.nome || COR.nome;
+  const d=(PERFIL.whats||'').replace(/\D/g,''); if(d.length>=10) COR.whats = d.length<=11 ? '55'+d : d;
+  if(PERFIL.cor){
+    const hx=h=>{h=h.replace('#','');return[0,2,4].map(i=>parseInt(h.substr(i,2),16))};
+    const toHex=a=>'#'+a.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
+    const lum=h=>{const a=hx(h).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*a[0]+.7152*a[1]+.0722*a[2]};
+    const mix=(a,b,t)=>{const x=hx(a),y=hx(b);return toHex(x.map((v,i)=>v+(y[i]-v)*t))};
+    let b=PERFIL.cor; for(let t=.08;(1.05/(lum(b)+.05))<3.2&&t<=.9;t+=.08) b=mix(PERFIL.cor,'#04163F',t);
+    const r=document.documentElement.style;
+    r.setProperty('--royal',b); r.setProperty('--royal-h',mix(b,'#ffffff',.12)); r.setProperty('--navy',mix(b,'#0B0D12',.42)); r.setProperty('--royal-d',mix(b,'#ffffff',.25));
+    r.setProperty('--sky',mix(b,'#ffffff',.6)); r.setProperty('--ice',mix(b,'#ffffff',.9)); r.setProperty('--chip',mix(b,'#ffffff',.8));
+  }
+  const ft=document.querySelector('.f-foot'); ft.innerHTML=`<span style="display:inline-flex;align-items:center;gap:8px">com tecnologia <img src="img/logo-navy.png" alt="PARCER" style="height:10px;margin:0"></span>`;
+  if(PERFIL.logo){ const c=document.querySelector('.cobrand .cor'); c.innerHTML=`<img src="${PERFIL.logo}" alt="" style="height:34px;max-width:130px;width:auto;object-fit:contain">`; }
+}
+document.getElementById('cor-nome') && (document.getElementById('cor-nome').textContent = COR.nome);
+document.getElementById('cor-av') && (document.getElementById('cor-av').textContent = COR.nome.split(/\s+/).filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase() || 'CP');
+document.getElementById('lock').innerHTML = `<span style="display:inline-flex;width:14px">${ic('lock')}</span>`;
+document.querySelector('.done .ok').innerHTML = ic('check');
+
+/* UFs */
+const UFS = "AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(' ');
+document.getElementById('uf').insertAdjacentHTML('beforeend', UFS.map(u=>`<option>${u}</option>`).join(''));
+
+/* Máscaras */
+const MASK = {
+  cpf: v => v.replace(/\D/g,'').slice(0,11).replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2'),
+  tel: v => { v=v.replace(/\D/g,'').slice(0,11); return v.length>10 ? v.replace(/(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3') : v.replace(/(\d{2})(\d{0,4})(\d{0,4})/,(m,a,b,c)=>`(${a}${a.length===2?') ':''}${b}${c?'-'+c:''}`); },
+  cep: v => v.replace(/\D/g,'').slice(0,8).replace(/(\d{5})(\d)/,'$1-$2')
+};
+document.querySelectorAll('[data-mask]').forEach(el => el.addEventListener('input', () => { el.value = MASK[el.dataset.mask](el.value); }));
+
+function cpfOk(c){ c=c.replace(/\D/g,''); if(c.length!==11||/^(\d)\1+$/.test(c)) return false;
+  for(let t=9;t<11;t++){ let s=0; for(let i=0;i<t;i++) s+=c[i]*(t+1-i); if(((s*10)%11)%10!=c[t]) return false; } return true; }
+
+/* CEP: preenche UF e endereço quando o site estiver no ar (ViaCEP) */
+document.getElementById('cep').addEventListener('blur', async e => {
+  const c = e.target.value.replace(/\D/g,''); if(c.length!==8) return;
+  try { const r = await fetch(`https://viacep.com.br/ws/${c}/json/`); const d = await r.json();
+    if(!d.erro){ document.getElementById('uf').value = d.uf; const end=document.getElementById('end');
+      if(!end.value) end.value = `${d.logradouro}, nº , ${d.bairro}, ${d.localidade}`; save(); }
+  } catch(_) {}
+});
+
+/* Condicionais */
+const form = document.getElementById('form');
+function valOf(name){ const els=form.elements[name]; if(!els) return ''; if(els instanceof RadioNodeList){ return els.value; } return els.value.trim(); }
+function applyConds(){
+  form.querySelectorAll('[data-if]').forEach(box => { const [k,v]=box.dataset.if.split('='); box.hidden = valOf(k)!==v; });
+}
+form.addEventListener('change', () => { applyConds(); save(); });
+form.addEventListener('input', save);
+
+/* Etapas */
+const steps = [...form.querySelectorAll('.fs')];
+const real = steps.filter(s=>!s.hasAttribute('data-final'));
+let cur = 0;
+document.getElementById('st-t').textContent = real.length;
+document.getElementById('prog').innerHTML = real.map(()=>'<i></i>').join('');
+
+function show(i){
+  cur = i; steps.forEach((s,k)=>s.classList.toggle('on', k===i));
+  const fin = steps[i].hasAttribute('data-final');
+  document.querySelectorAll('#prog i').forEach((b,k)=>b.classList.toggle('on', k<=i));
+  document.getElementById('st-name').textContent = steps[i].dataset.step;
+  document.getElementById('st-n').textContent = Math.min(i+1, real.length);
+  document.getElementById('prev').style.visibility = (i===0||fin) ? 'hidden' : 'visible';
+  document.getElementById('next').hidden = i >= real.length-1;
+  document.getElementById('send').hidden = i !== real.length-1;
+  document.getElementById('acts').hidden = fin;
+  document.querySelector('.stepinfo').style.visibility = fin ? 'hidden' : 'visible';
+  if(i===real.length-1) buildReview();
+  window.scrollTo({top: document.querySelector('.progress').offsetTop - 90, behavior:'smooth'});
+}
+
+function validate(sec){
+  let ok = true, first = null;
+  sec.querySelectorAll('.f').forEach(f => {
+    if(f.hidden) return;
+    let bad = false;
+    const inp = f.querySelector('input:not([type=radio]):not([type=checkbox]), select');
+    const seg = f.querySelector('.seg[data-req]');
+    if(seg){ bad = !valOf(seg.dataset.req); }
+    else if(inp && (inp.required || inp.hasAttribute('data-cond-req'))){
+      const v = inp.value.trim();
+      bad = !v;
+      if(!bad && inp.id==='cpf') bad = !cpfOk(v);
+      if(!bad && inp.id==='tel') bad = v.replace(/\D/g,'').length < 10;
+      if(!bad && inp.id==='cep') bad = v.replace(/\D/g,'').length !== 8;
+      if(!bad && inp.type==='email') bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      if(!bad && inp.id==='nome') bad = v.split(/\s+/).length < 2;
+    }
+    f.classList.toggle('err', bad);
+    if(bad){ ok=false; first = first || f; }
+  });
+  if(first){ const el=first.querySelector('input,select'); el && el.focus({preventScroll:true}); first.scrollIntoView({behavior:'smooth',block:'center'}); }
+  return ok;
+}
+form.addEventListener('input', e => { const f=e.target.closest('.f'); f && f.classList.remove('err'); });
+form.addEventListener('change', e => { const f=e.target.closest('.f'); f && f.classList.remove('err'); });
+
+document.getElementById('next').onclick = () => { if(validate(steps[cur])) show(cur+1); };
+document.getElementById('prev').onclick = () => show(cur-1);
+
+/* Revisão */
+function fmtDate(v){ if(!v) return ''; const p=v.split('-'); return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:`${p[1]}/${p[0]}`; }
+function collect(){
+  return real.slice(0,-1).map((sec,idx) => {
+    const items = [];
+    sec.querySelectorAll('.f').forEach(f => {
+      if(f.hidden) return;
+      const seg = f.querySelector('.seg[data-req]');
+      const inp = f.querySelector('input:not([type=radio]):not([type=checkbox]), select');
+      const label = (f.querySelector(':scope > label, :scope > .lb')||{}).textContent.replace('*','').trim();
+      let v = seg ? valOf(seg.dataset.req) : (inp ? inp.value.trim() : '');
+      if(inp && (inp.type==='date'||inp.type==='month')) v = fmtDate(v);
+      items.push([label, v || '—']);
+    });
+    return { titulo: sec.dataset.step, idx, items };
+  });
+}
+function buildReview(){
+  document.getElementById('review').innerHTML = collect().map(g => `
+    <div class="grp"><h5>${g.titulo}<button type="button" class="edit" data-go="${g.idx}">Editar</button></h5>
+    <dl>${g.items.map(([k,v])=>`<dt>${k}</dt><dd>${v.replace(/</g,'&lt;')}</dd>`).join('')}</dl></div>`).join('');
+}
+document.getElementById('review').addEventListener('click', e => { const b=e.target.closest('[data-go]'); if(b) show(+b.dataset.go); });
+
+/* Envio */
+function message(){
+  let t = `*Formulário de Adesão · Plano de Saúde*\nEnviado pelo portal Parcer para ${COR.nome}\n`;
+  collect().forEach(g => { t += `\n*${g.titulo}*\n` + g.items.map(([k,v])=>`${k}: ${v}`).join('\n') + '\n'; });
+  t += `\nAutorizo o uso dos meus dados para a cotação (LGPD).`;
+  return t;
+}
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const ok = document.getElementById('lgpd').checked;
+  document.getElementById('lgpd-f').classList.toggle('err', !ok);
+  if(!ok) return;
+  const url = `https://wa.me/${COR.whats}?text=${encodeURIComponent(message())}`;
+  const a = document.getElementById('wa-again'); a.href = url;
+  document.getElementById('done-nome').textContent = (valOf('Nome completo').split(' ')[0] || 'obrigado');
+  try{ const L=JSON.parse(localStorage.getItem('parcer-proto-leads')||'null'); if(L){ const det={}; collect().forEach(g=>g.items.forEach(([k,v])=>{ if(!/Nome completo|Telefone/.test(k)) det[k]=v; }));
+    L.unshift({id:Date.now(),nome:valOf('Nome completo'),tel:valOf('Telefone'),produto:'Plano de Saúde',origem:'Formulário Saúde',status:'novo',data:new Date().toISOString(),det}); localStorage.setItem('parcer-proto-leads',JSON.stringify(L)); } }catch(_){}
+  a.click();
+  try{ localStorage.removeItem(KEY); }catch(_){}
+  show(steps.length-1);
+});
+document.getElementById('lgpd').addEventListener('change', e => document.getElementById('lgpd-f').classList.toggle('err', !e.target.checked));
+document.getElementById('copy-ans').onclick = async () => {
+  try { await navigator.clipboard.writeText(message().replace(/\*/g,'')); toast('Respostas copiadas.'); } catch(_) { toast('Não foi possível copiar.'); }
+};
+
+/* Rascunho: se o cliente sair, as respostas continuam aqui */
+const KEY = 'parcer-form-saude';
+function save(){ try{ const d={}; [...form.elements].forEach(el=>{ if(!el.name) return; if(el.type==='radio'){ if(el.checked) d[el.name]=el.value; } else if(el.type!=='checkbox') d[el.name]=el.value; }); localStorage.setItem(KEY, JSON.stringify(d)); }catch(_){} }
+(function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||'{}'); Object.entries(d).forEach(([k,v])=>{ const el=form.elements[k]; if(!el) return; if(el instanceof RadioNodeList){ el.value=v; } else el.value=v; }); }catch(_){} applyConds(); })();
+
+show(0);
+</script>
+</body>
+</html>

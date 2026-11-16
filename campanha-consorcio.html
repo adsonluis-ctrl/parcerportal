@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parcer · Campanha de Consórcio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/parcer.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="index.html" class="logo" aria-label="Parcer — início"><img src="img/logo-navy.png" alt="PARCER"></a>
+    <nav class="nav"><a href="index.html">Início</a><a href="index.html#campanhas" class="on">Campanhas</a><a href="index.html#materiais">Materiais</a><a href="index.html#formularios">Formulários</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="hero-inner">
+      <nav class="crumbs" aria-label="Navegação">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <a href="index.html">Início</a><span>/</span><a href="index.html#campanhas" id="crumb-cat"></a><span>/</span><b>Materiais da campanha</b>
+      </nav>
+      <div class="badge"><span class="tag" id="camp-tag"></span><span class="name" id="camp-name"></span></div>
+      <h1 id="camp-title"></h1>
+      <div class="meta">
+        <span>Atualizado em <b id="camp-upd"></b></span>
+        <span>Vigência <b id="camp-vig"></b></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="block rv"><div class="eyebrow">Tabelas</div><div class="card" id="tabelas"></div></section>
+  <section class="block rv"><div class="eyebrow">Outros materiais</div><div class="grid3" id="outros"></div></section>
+  <section class="block rv"><div class="eyebrow">Ferramentas Parcer</div><div class="card" id="ferramentas"></div></section>
+  <section class="block rv"><div class="eyebrow">Materiais de apoio</div><div class="card" id="apoio"></div></section>
+
+  <p class="vig rv" id="vig-line"></p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <h2>Ficou com dúvida?<br><b>Seu gerente comercial está do seu lado.</b></h2>
+      <div class="f-cta">
+        <a class="btn wa" href="https://wa.me/556131426161" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2Z"/></svg>
+          Chama no WhatsApp
+        </a>
+        <a class="btn line" href="https://portal.parcerseguros.com.br" target="_blank" rel="noopener">Acessar o Cockpit</a>
+      </div>
+    </div>
+    <div class="f-cols">
+      <div>
+        <h5>Parcer</h5>
+        <p>Gestora e rede de apoio para corretores e assessores de seguros. A operação fica com a gente. Você vende.</p>
+      </div>
+      <div>
+        <h5>Contato</h5>
+        <p>WhatsApp (61) 3142-6161</p>
+        <p>atendimento@parcerseguros.com.br</p>
+        <p><a href="https://parcerseguros.com.br" target="_blank" rel="noopener">parcerseguros.com.br</a></p>
+      </div>
+      <div>
+        <h5>Endereço</h5>
+        <p>SCN Qd 1, Bl C, Ed. Trade Center, Sobreloja 101/102</p>
+        <p>Brasília/DF</p>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>Uso exclusivo de corretores e assessores parceiros Parcer.</span>
+      <span>Ser parceiro é ser Parcer.</span>
+      <img src="img/logo-white.png" alt="PARCER" height="16">
+    </div>
+  </div>
+</footer>
+
+<div class="cookie" id="cookie">
+  <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+  <p>Usamos cookies para analisar o uso do site e melhorar sua experiência, conforme a <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener">LGPD (Lei 13.709/2018)</a>. Nenhum dado pessoal é coletado.</p>
+  <div class="btns"><button class="btn ghost" data-ck>Recusar</button><button class="btn" data-ck>Aceitar</button></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   CONTEÚDO — edite aqui. Troque "#" pelos links reais
+   (Google Drive, Canva, YouTube, PDFs etc.).
+   ========================================================= */
+const CONTENT = {
+  campanha: {
+    categoria: "Consórcio",
+    tag: "Campanha",
+    nome: "Novembro <b>Parcer</b>",
+    titulo: "Peças e materiais da campanha de <b>consórcio.</b>",
+    atualizado: "16/11/2026",
+    vigencia: "01/11 a 30/11/2026"
+  },
+  // Tabelas: cada produto tem etapas. Etapa 1 = redutor; Etapa 2 (opcional) = forma de entrada.
+  tabelas: [
+    { nome: "Imóvel", icon: "home",
+      redutores: ["Plano integral", "Redutor de 25%", "Redutor de 50%"],
+      entradas: ["Entrada diluída no prazo do grupo", "Entrada à vista", "Entrada em 3x", "Entrada em 6x"],
+      links: ["Tabelas Imóvel PF", "Tabelas Imóvel PJ"] },
+    { nome: "Automóvel", icon: "car", badge: "Atualizado",
+      redutores: ["Plano integral", "Redutor de 25%", "Redutor de 50%"],
+      links: ["Tabelas Automóvel PF", "Tabelas Automóvel PJ"] },
+    { nome: "Pesados", icon: "truck",
+      redutores: ["Plano integral", "Redutor de 25%", "Redutor de 50%"],
+      links: ["Tabelas Pesados PF", "Tabelas Pesados PJ"] }
+  ],
+  outros: [
+    { titulo: "FAQ da campanha", texto: "Regras, prazos e as dúvidas mais comuns dos clientes.", icon: "book", url: "#" },
+    { titulo: "Calendário de conteúdo · Novembro", texto: "Posts prontos para você publicar para seus clientes.", icon: "calendar", url: "#" },
+    { titulo: "Peças para redes sociais", texto: "Feed, stories e reels com a sua marca.", icon: "share", url: "#", emProducao: true }
+  ],
+  ferramentas: [
+    { titulo: "Cockpit by Parcer", sub: "Propostas, recibos, comissões, hub de marketing e CRM de indicações", icon: "grid", url: "https://portal.parcerseguros.com.br" },
+    { titulo: "Agger", sub: "Multicálculo: cote e compare as seguradoras em um só lugar", icon: "calc", url: "#" },
+    { titulo: "Quiver", sub: "Gestão da sua carteira, apólices e renovações", icon: "folder", url: "#" },
+    { titulo: "App do corretor", sub: "Sua operação na palma da mão", icon: "phone", url: "#" }
+  ],
+  apoio: [
+    { titulo: "Como explicar a contemplação", icon: "scale", links: ["Guia de bolso", "FAQ"] },
+    { titulo: "Venda cruzada: seguro + consórcio", icon: "users", links: ["Playbook", "Roteiro de WhatsApp"] },
+    { titulo: "Compra entre PF e PJ", icon: "briefcase", links: ["Guia de bolso", "FAQ"] },
+    { titulo: "Renovação e inadimplência", icon: "refresh", links: ["Guia de bolso", "Modelos de e-mail"] },
+    { titulo: "Portal de indicações", icon: "userCheck", links: ["Guia de bolso"] }
+  ],
+};
+
+/* ============ Ícones (traço) ============ */
+const P = {
+  home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  car:'<path d="M5 17h14M5 17a2 2 0 1 0 4 0M15 17a2 2 0 1 0 4 0M3 17v-4l2-5h11l3 5h2v4"/><path d="M8 8v5M3 13h18"/>',
+  truck:'<path d="M2 6h11v10H2zM13 10h4l4 4v2h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+  book:'<path d="M2 5c3-1 6-1 10 1 4-2 7-2 10-1v14c-3-1-6-1-10 1-4-2-7-2-10-1z"/><path d="M12 6v14"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+  grid:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+  calc:'<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h8"/>',
+  folder:'<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  phone:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',
+  scale:'<path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/>',
+  users:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/>',
+  briefcase:'<rect x="2" y="7" width="20" height="14" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M2 13h20"/>',
+  refresh:'<path d="M21 12a9 9 0 0 1-15.5 6.2L3 16M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/>',
+  userCheck:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 11l2 2 4-4"/>',
+  chev:'<path d="m6 9 6 6 6-6"/>',
+  ext:'<path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  play:'<path d="M7 4v16l13-8z" fill="currentColor" stroke="none"/>'
+};
+const ic = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${P[n]||''}</svg>`;
+const linkBtn = (label, url="#", ghost=false) => `<a class="btn ${ghost?'ghost':''}" href="${url}" target="_blank" rel="noopener" data-link>${ic('file')}${label}</a>`;
+
+/* ============ Render ============ */
+const C = CONTENT.campanha;
+document.getElementById('crumb-cat').textContent = C.categoria;
+document.getElementById('camp-tag').textContent = C.tag;
+document.getElementById('camp-name').innerHTML = C.nome;
+document.getElementById('camp-title').innerHTML = C.titulo;
+document.getElementById('camp-upd').textContent = C.atualizado;
+document.getElementById('camp-vig').textContent = C.vigencia;
+document.getElementById('vig-line').innerHTML = `A vigência desta campanha é de <b>${C.vigencia.replace(' a ',' a ')}.</b>`;
+
+const accRow = (label, icon, right, badge) => `
+  <button class="row" aria-expanded="false">
+    ${icon?`<span class="ico">${ic(icon)}</span>`:''}
+    <span class="lbl">${label}${badge?`<span class="pill">${badge}</span>`:''}</span>
+    ${right}
+  </button>`;
+const chev = `<span class="chev">${ic('chev')}</span>`;
+
+// Tabelas
+document.getElementById('tabelas').innerHTML = CONTENT.tabelas.map(p => {
+  const inner = p.redutores.map(r => {
+    const body = p.entradas
+      ? `<div class="step"><span class="n">2</span>Escolha a forma de entrada</div>` +
+        p.entradas.map(e => `<div class="sub"><h4>${e}</h4><div class="btns">${p.links.map((l,i)=>linkBtn(l,'#',i>0)).join('')}</div></div>`).join('')
+      : `<div class="btns" style="padding-top:4px">${p.links.map((l,i)=>linkBtn(l,'#',i>0)).join('')}</div>`;
+    return `<div class="opt acc">${accRow(r,null,chev)}<div class="panel"><div><div class="panel-in">${body}</div></div></div></div>`;
+  }).join('');
+  return `<div class="acc">${accRow(p.nome,p.icon,chev,p.badge)}
+    <div class="panel"><div><div class="panel-in">
+      <div class="step"><span class="n">1</span>Escolha o redutor</div>
+      <div class="opts">${inner}</div>
+    </div></div></div></div>`;
+}).join('');
+
+// Outros materiais
+document.getElementById('outros').innerHTML = CONTENT.outros.map(o => o.emProducao
+  ? `<div class="tile off"><span class="ico">${ic(o.icon)}</span><span class="pill soft">Em produção</span><h3>${o.titulo}</h3><p>${o.texto}</p></div>`
+  : `<a class="tile" href="${o.url}" target="_blank" rel="noopener" data-link><span class="ico">${ic(o.icon)}</span><h3>${o.titulo}</h3><p>${o.texto}</p><span class="go">Acessar ${ic('arrow')}</span></a>`
+).join('');
+
+// Ferramentas
+document.getElementById('ferramentas').innerHTML = CONTENT.ferramentas.map(f => `
+  <a class="row" href="${f.url}" target="_blank" rel="noopener" data-link>
+    <span class="ico">${ic(f.icon)}</span>
+    <span class="lbl" style="flex-direction:column;align-items:flex-start;gap:2px">${f.titulo}<small style="font-weight:400;font-size:13px;color:var(--muted)">${f.sub}</small></span>
+    <span class="ext">${ic('ext')}</span>
+  </a>`).join('');
+
+// Apoio
+document.getElementById('apoio').innerHTML = CONTENT.apoio.map(a => `
+  <div class="acc">${accRow(a.titulo,a.icon,chev)}
+    <div class="panel"><div><div class="panel-in"><div class="btns">${a.links.map((l,i)=>linkBtn(l,'#',i>0)).join('')}</div></div></div></div>
+  </div>`).join('');
+
+
+/* ============ Comportamento ============ */
+document.addEventListener('click', e => {
+  const row = e.target.closest('button.row');
+  if (row) {
+    const acc = row.parentElement;
+    const open = acc.classList.toggle('open');
+    row.setAttribute('aria-expanded', open);
+    return;
+  }
+  const a = e.target.closest('[data-link]');
+  if (a && a.getAttribute('href') === '#') { e.preventDefault(); toast('Link em breve. Fale com seu gerente comercial.'); }
+  if (e.target.matches('[data-ck]')) document.getElementById('cookie').classList.add('hide');
+});
+
+let tt; function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2400); }
+
+const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target);} }), {threshold:.08});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
